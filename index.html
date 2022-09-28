@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Find JSON Sample</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="title">
+    <h1>検索するツール</h1>
+    <p>
+      検索する内容を入力
+    </p>
+  </div>
+
+  <div class="main">
+    <input type="text" id="enemy_name">
+    <button onclick="search_event()">検索</button>
+  </div>
+
+  <script>
+    function search_event() {
+      const name = document.getElementById("enemy_name").value;
+      let i = 0;
+      var data = [
+        {
+          "name": "サンプル1",
+          "floor": 1,
+          "bool": 0
+        },
+        {
+          "name": "サンプル2",
+          "floor": 2,
+          "bool": 0
+        },
+        {
+          "name": "サンプル3",
+          "floor": 1,
+          "bool": 0
+        },
+        {
+          "name": "サンプル4",
+          "floor": 1,
+          "bool": 0
+        },
+        {
+          "name": "サンプル5",
+          "floor": 1,
+          "bool": 0
+        },
+        {
+          "name": "end",
+          "floor": 0,
+          "bool": 0
+        }
+      ];
+      $(".main").children("p").fadeOut();
+      while (data[i]["name"] !== "end") {
+        if (data[i]["name"] == name) {
+          if (data[i]["bool"] == 0) {
+            $(".main").append("<p>" + name + "の数値は " + data[i]["floor"] + " です。</p>");
+          } else {
+            $(".main").append("<p>" + name + "は対象外です</p>");
+          }
+          break;
+        } else if (data[i + 1]["name"] == "end") {
+          console.log("not found");
+          $(".main").append("<p>" + "「" + name + "」は存在しません<p>");
+        }
+        i++;
+      }
+
+    }
+
+  </script>
+
+</body>
+
+</html>
