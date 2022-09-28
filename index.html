@@ -17,61 +17,57 @@
 
   <div class="main">
     <input type="text" id="enemy_name">
-    <button onclick="search_event()">検索</button>
+    <button onclick="searchEvent()">検索</button>
   </div>
 
   <script>
-    function search_event() {
-      const name = document.getElementById("enemy_name").value;
-      let i = 0;
-      var data = [
-        {
-          "name": "サンプル1",
-          "floor": 1,
-          "bool": 0
-        },
-        {
-          "name": "サンプル2",
-          "floor": 2,
-          "bool": 0
-        },
-        {
-          "name": "サンプル3",
-          "floor": 1,
-          "bool": 0
-        },
-        {
-          "name": "サンプル4",
-          "floor": 1,
-          "bool": 0
-        },
-        {
-          "name": "サンプル5",
-          "floor": 1,
-          "bool": 0
-        },
-        {
-          "name": "end",
-          "floor": 0,
-          "bool": 0
-        }
-      ];
+    const data = [
+      {
+        "name": "サンプル1",
+        "floor": 1,
+        "isDaily": true,
+      },
+      {
+        "name": "サンプル2",
+        "floor": 2,
+        "isDaily": true,
+      },
+      {
+        "name": "サンプル3",
+        "floor": 1,
+        "isDaily": true,
+      },
+      {
+        "name": "サンプル4",
+        "floor": 1,
+        "isDaily": false,
+      },
+      {
+        "name": "サンプル5",
+        "floor": 1,
+        "isDaily": false,
+      },
+    ];
+
+    const searchEvent = () => {
+      const searchName = document.getElementById("enemy_name").value;
       $(".main").children("p").fadeOut();
-      while (data[i]["name"] !== "end") {
-        if (data[i]["name"] == name) {
-          if (data[i]["bool"] == 0) {
-            $(".main").append("<p>" + name + "の数値は " + data[i]["floor"] + " です。</p>");
-          } else {
-            $(".main").append("<p>" + name + "は対象外です</p>");
-          }
-          break;
-        } else if (data[i + 1]["name"] == "end") {
-          console.log("not found");
-          $(".main").append("<p>" + "「" + name + "」は存在しません<p>");
-        }
-        i++;
+
+      // 検索処理
+      const res = data.find((v => v.name === searchName));
+      // console.log(res);
+
+      // エラー処理
+      if (!res) {
+        // console.log("not found");
+        $(".main").append(`<p>「 ${searchName} 」は存在しません<p>`);
+        return
       }
 
+      // 結果の表示
+      const trueResult = `<p>${searchName}の数値は ${res.floor}です。</p>`;
+      const falseResult = `<p>${searchName}は対象外です。</p>`;
+      $(".main").append(res.isDaily ? trueResult : falseResult);
     }
 
   </script>
